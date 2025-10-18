@@ -1,0 +1,50 @@
+{
+  "name": "emdashcodes/claude-code-plugins",
+  "owner": {
+    "name": "Em",
+    "url": "https://github.com/emdashcodes"
+  },
+  "metadata": {
+    "description": "Claude Code workflow orchestration through focused plugins, specialized agents, skills, and tools",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "claude-code-meta",
+      "source": "./plugins/claude-code-meta",
+      "description": "Comprehensive toolkit for working with Claude Code features",
+      "version": "1.0.0",
+      "author": {
+        "name": "Em"
+      },
+      "repository": "https://github.com/emdashcodes/claude-code-plugins",
+      "license": "MIT",
+      "keywords": ["claude-code", "hooks", "subagents", "skills", "development", "automation", "configuration"],
+      "category": "development-tools",
+      "strict": false,
+      "skills": [
+        "./skills/claude-code-hooks"
+      ]
+    },
+ {
+      "name": "mermaid-diagram-to-image",
+      "source": "./plugins/mermaid-diagram-to-image",
+      "description": "",
+      "version": "1.0.0",
+      "author": {
+        "name": "Em"
+      },
+      "repository": "https://github.com/emdashcodes/claude-code-plugins",
+      "license": "MIT",
+      "keywords": ["claude-code"],
+      "category": "development-tools",
+      "strict": false,
+      "commands": [
+        "./commands/mermaid-diagram-to-image.md"
+      ],
+      "skills": [
+        "./skills/mermaid-diagram-to-image"
+      ]
+    }
+  ]
+}
