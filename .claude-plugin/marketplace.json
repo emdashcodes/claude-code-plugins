@@ -1,18 +1,18 @@
 {
-  "name": "emdashcodes/claude-code-plugins",
+  "name": "emdashcodes-claude-code-plugins",
   "owner": {
     "name": "Em",
     "url": "https://github.com/emdashcodes"
   },
   "metadata": {
-    "description": "Claude Code workflow orchestration through focused plugins, specialized agents, skills, and tools",
+    "description": "Toolkit for Claude Code featuring specialized plugins, agents, and development skills",
     "version": "1.0.0"
   },
   "plugins": [
     {
       "name": "claude-code-meta",
       "source": "./plugins/claude-code-meta",
-      "description": "Comprehensive toolkit for working with Claude Code features",
+      "description": "Essential toolkit for building and configuring Claude Code plugins, skills, hooks, and automation workflows",
       "version": "1.0.0",
       "author": {
         "name": "Em"
@@ -26,21 +26,21 @@
         "./skills/claude-code-hooks"
       ]
     },
- {
+    {
       "name": "mermaid-diagram-to-image",
       "source": "./plugins/mermaid-diagram-to-image",
-      "description": "",
+      "description": "Convert Mermaid diagrams to images (PNG, SVG, PDF) using mermaid-cli.",
       "version": "1.0.0",
       "author": {
         "name": "Em"
       },
       "repository": "https://github.com/emdashcodes/claude-code-plugins",
       "license": "MIT",
-      "keywords": ["claude-code"],
+      "keywords": ["claude-code", "mermaid", "diagrams", "visualization", "image-generation", "documentation"],
       "category": "development-tools",
       "strict": false,
       "commands": [
-        "./commands/mermaid-diagram-to-image.md"
+        "./commands/convert.md"
       ],
       "skills": [
         "./skills/mermaid-diagram-to-image"
