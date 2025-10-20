@@ -1,11 +1,52 @@
 # emdashcodes/claude-code-plugins
 
-> [!WARNING]
-> For now this is just a place to try out Claude plugins for now, not much to see here yet.
+Claude Code plugins featuring specialized agents, commands, and development skills.
 
-## Quick Start
+## claude-code-meta
 
-### Step 1: Add the Marketplace
+Toolkit for building and configuring Claude Code plugins, skills, hooks, and automation workflows.
+
+**What's included:**
+
+- **claude-code-hooks skill** - Guide for creating event-driven automation and validation workflows for Claude Code
+
+**Use cases:**
+
+- Setting up pre-commit validation hooks
+- Automating code formatting and linting
+- Enriching context with git status or environment info
+- Blocking dangerous operations before execution
+- Integrating external tools and APIs
+- Controlling workflow decisions and permissions
+
+```bash
+# Install Claude Code hooks toolkit
+/plugin install claude-code-meta@emdashcodes-claude-code-plugins
+```
+
+## mermaid-diagram-to-image
+
+Convert Mermaid diagrams to high-quality images (PNG, SVG, PDF) using mermaid-cli.
+
+**What's included:**
+
+- **mermaid-diagram-to-image skill** - Complete diagram conversion workflow
+- **convert command** - Quick conversion slash command
+
+**Use cases:**
+
+- Converting Mermaid syntax to visual diagrams
+- Generating documentation images
+- Creating presentation-ready flowcharts
+- Exporting architecture diagrams for sharing
+- Building visual representations of system designs
+
+```bash
+# Install Mermaid diagram converter
+/plugin install mermaid-diagram-to-image@emdashcodes-claude-code-plugins
+```
+
+## Install the Marketplace
 
 Add this marketplace to Claude Code:
 
@@ -13,36 +54,26 @@ Add this marketplace to Claude Code:
 /plugin marketplace add emdashcodes/claude-code-plugins
 ```
 
-This makes all plugins available for installation, but does not load any agents or tools into the Claude context.
-
-### Step 2: Install Plugins
-
-Browse available plugins:
-
-```bash
-/plugin
-```
-
-Install the plugins you need:
-
-```bash
-/plugin install <plugin>
-```
-
-Each installed plugin only loads its specific agents, commands, and skills into the Claude context.
+This makes all plugins available for installation.
 
 ## Repository Structure
 
 ```
-claude-agents/
+emdashcodes/
 ├── .claude-plugin/
-│   └── marketplace.json          # all plugins
+│   └── marketplace.json          # Plugin registry
 ├── plugins/
-│   ├── plugin-name/
-│   │   ├── agents/               # Expert definitions
-│   │   ├── commands/             # Scaffolding tool
-│   │   └── skills/               # Specialized skills
-│   └── ... (more plugins)
+│   ├── claude-code-meta/
+│   │   └── skills/
+│   │       └── claude-code-hooks/
+│   │           ├── SKILL.md      # Main skill entrypoint
+│   │           └── references/   # Hook event docs, patterns, best practices
+│   └── mermaid-diagram-to-image/
+│       ├── commands/
+│       │   └── convert.md        # /convert slash command
+│       └── skills/
+│           └── mermaid-diagram-to-image/
+│               └── SKILL.md      # Main skill entrypoint
 └── README.md                     # This file
 ```
 
@@ -53,7 +84,7 @@ To add new agents, skills, or commands:
 1. Identify or create the appropriate plugin directory in `plugins/`
 2. Create `.md` files in the appropriate subdirectory:
    - `agents/` - For specialized agents
-   - `commands/` - For tools and workflows
+   - `commands/` - For slash commands and tools
    - `skills/` - For modular knowledge packages
 3. Follow naming conventions (lowercase, hyphen-separated)
 4. Write clear activation criteria and comprehensive content
@@ -68,6 +99,7 @@ To add new agents, skills, or commands:
 - [Subagents Guide](https://docs.claude.com/en/docs/claude-code/sub-agents)
 - [Agent Skills Guide](https://docs.claude.com/en/docs/agents-and-tools/agent-skills/overview)
 - [Slash Commands Reference](https://docs.claude.com/en/docs/claude-code/slash-commands)
+- [MCP Protocol](https://modelcontextprotocol.io)
 
 ## License
 
