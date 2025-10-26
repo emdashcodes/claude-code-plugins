@@ -109,36 +109,38 @@ class SessionCache {
     }
 
     try {
-      // Get already-injected memories for this session
-      const placeholders = memoryIds.map(() => '?').join(',');
-      const stmt = this.db.prepare(`
-        SELECT memory_id FROM session_cache
-        WHERE session_id = ? AND memory_id IN (${placeholders})
-      `);
-
-      const cached = stmt.all(sessionId, ...memoryIds).map(row => row.memory_id);
-
-      // Filter to only NEW memories
-      const newMemoryIds = memoryIds.filter(id => !cached.includes(id));
-
-      // Add new memories to cache
-      if (newMemoryIds.length > 0) {
-        const insertStmt = this.db.prepare(`
-          INSERT OR IGNORE INTO session_cache (session_id, memory_id, injected_at)
-          VALUES (?, ?, ?)
+      // Wrap entire check-and-insert in a transaction for atomicity
+      // This prevents race conditions where multiple processes inject the same memory
+      const checkAndInsert = this.db.transaction((sessionId, memoryIds) => {
+        // Get already-injected memories for this session
+        const placeholders = memoryIds.map(() => '?').join(',');
+        const stmt = this.db.prepare(`
+          SELECT memory_id FROM session_cache
+          WHERE session_id = ? AND memory_id IN (${placeholders})
         `);
 
-        const now = Date.now();
-        const insertMany = this.db.transaction((ids) => {
-          for (const id of ids) {
+        const cached = stmt.all(sessionId, ...memoryIds).map(row => row.memory_id);
+
+        // Filter to only NEW memories
+        const newMemoryIds = memoryIds.filter(id => !cached.includes(id));
+
+        // Add new memories to cache atomically
+        if (newMemoryIds.length > 0) {
+          const insertStmt = this.db.prepare(`
+            INSERT OR IGNORE INTO session_cache (session_id, memory_id, injected_at)
+            VALUES (?, ?, ?)
+          `);
+
+          const now = Date.now();
+          for (const id of newMemoryIds) {
             insertStmt.run(sessionId, id, now);
           }
-        });
+        }
 
-        insertMany(newMemoryIds);
-      }
+        return newMemoryIds;
+      });
 
-      return newMemoryIds;
+      return checkAndInsert(sessionId, memoryIds);
     } catch (error) {
       console.error('Session cache check failed:', error.message);
       // Fail open - return all memories if cache fails
