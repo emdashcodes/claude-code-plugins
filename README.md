@@ -46,6 +46,43 @@ Convert Mermaid diagrams to high-quality images (PNG, SVG, PDF) using mermaid-cl
 /plugin install mermaid-diagram-to-image@emdashcodes-claude-code-plugins
 ```
 
+## ada-memory
+
+Intelligent memory system that automatically extracts and injects relevant context from your conversation history using semantic search and vector embeddings.
+
+**What's included:**
+
+- **UserPromptSubmit hook** - Searches and injects relevant memories before each message
+- **SessionEnd hook** - Cleans up session cache when conversation ends
+- **Extraction threshold** - Automatically extracts memories every 5 messages
+- **SQLite storage** - Persistent local storage with vector embeddings
+
+**How it works:**
+
+- Monitors your conversations and extracts factual information using mem0 AI
+- Stores memories with semantic embeddings for intelligent retrieval
+- Automatically injects relevant context when you ask related questions
+- Session-based deduplication prevents showing the same memory twice
+- All data stored locally in `~/.claude/mem0/`
+
+**Use cases:**
+
+- Remembering project details across conversations
+- Maintaining context about your preferences and workflows
+- Recalling technical decisions and rationale
+- Building persistent knowledge from past interactions
+
+```bash
+# Install Ada Memory system
+/plugin install ada-memory@emdashcodes-claude-code-plugins
+
+# Post-installation: Install dependencies
+cd ~/.claude/plugins/marketplaces/emdashcodes-claude-code-plugins/plugins/ada-memory
+./install.sh
+```
+
+**Note:** Requires OpenAI API key. See plugin README for configuration details.
+
 ## Install the Marketplace
 
 Add this marketplace to Claude Code:
