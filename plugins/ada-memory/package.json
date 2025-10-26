@@ -1,0 +1,10 @@
+{
+  "name": "ada-memory-plugin",
+  "version": "2.0.0",
+  "type": "module",
+  "description": "Standalone Claude Code memory plugin using mem0",
+  "dependencies": {
+    "mem0ai": "^2.1.38",
+    "better-sqlite3": "^11.8.1"
+  }
+}

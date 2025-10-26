@@ -45,6 +45,20 @@
       "skills": [
         "./skills/mermaid-diagram-to-image"
       ]
+    },
+    {
+      "name": "ada-memory",
+      "source": "./plugins/ada-memory",
+      "description": "Intelligent memory system with automatic extraction and injection of relevant context from conversation history",
+      "version": "1.0.0",
+      "author": {
+        "name": "Em"
+      },
+      "repository": "https://github.com/emdashcodes/claude-code-plugins",
+      "license": "MIT",
+      "keywords": ["claude-code", "memory", "context", "ai", "conversation-history", "semantic-search"],
+      "category": "development-tools",
+      "strict": false
     }
   ]
 }
