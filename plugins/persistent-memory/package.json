@@ -4,8 +4,8 @@
   "type": "module",
   "description": "Standalone Claude Code memory plugin using mem0 with Claude Code LLM provider",
   "dependencies": {
-    "@emdashcodes/mem0-claude-code": "^2.1.38",
     "@anthropic-ai/claude-agent-sdk": "^0.1.30",
+    "@emdashcodes/mem0-claude-code": "^2.1.38-claudecode.0",
     "better-sqlite3": "^11.8.1"
   }
 }
