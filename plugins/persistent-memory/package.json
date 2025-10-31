@@ -1,0 +1,11 @@
+{
+  "name": "persistent-memory-plugin",
+  "version": "2.0.0",
+  "type": "module",
+  "description": "Standalone Claude Code memory plugin using mem0 with Claude Code LLM provider",
+  "dependencies": {
+    "@emdashcodes/mem0-claude-code": "^2.1.38",
+    "@anthropic-ai/claude-agent-sdk": "^0.1.30",
+    "better-sqlite3": "^11.8.1"
+  }
+}

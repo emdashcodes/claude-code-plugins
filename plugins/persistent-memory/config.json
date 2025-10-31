@@ -1,0 +1,28 @@
+{
+  "storage": {
+    "mem0HistoryPath": "~/.claude/mem0/history.db",
+    "mem0VectorPath": "~/.claude/mem0/vectors.db",
+    "sessionCachePath": "~/.claude/mem0/sessions.db"
+  },
+  "apiKey": null,
+  "mem0": {
+    "llm": {
+      "provider": "claude_code",
+      "model": "claude-haiku-4-5-20251001",
+      "modelProperties": {
+        "maxTurns": 1,
+        "maxTokens": 4096,
+        "allowedTools": ["Read", "Grep", "Glob"],
+        "claudeCodePath": "/Users/emdash/.claude/local/claude"
+      }
+    },
+    "embedder": {
+      "provider": "openai",
+      "model": "text-embedding-3-small"
+    },
+    "vectorStore": {
+      "provider": "memory",
+      "dimension": 1536
+    }
+  }
+}

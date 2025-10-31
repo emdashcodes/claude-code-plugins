@@ -47,8 +47,8 @@
       ]
     },
     {
-      "name": "ada-memory",
-      "source": "./plugins/ada-memory",
+      "name": "persistent-memory",
+      "source": "./plugins/persistent-memory",
       "description": "Intelligent memory system with automatic extraction and injection of relevant context from conversation history",
       "version": "1.0.0",
       "author": {
