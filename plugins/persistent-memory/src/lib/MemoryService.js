@@ -109,8 +109,8 @@ class MemoryService {
         llmConfig.config.apiKey = apiKey;
       }
 
-      // Initialize mem0
-      this.memory = new Memory({
+      // Build Memory config
+      const memoryConfig = {
         llm: llmConfig,
         embedder: {
           provider: config.mem0.embedder.provider,
@@ -133,7 +133,15 @@ class MemoryService {
             historyDbPath
           }
         }
-      });
+      };
+
+      // Add custom prompt if configured
+      if (config.customPrompt) {
+        memoryConfig.customPrompt = config.customPrompt;
+      }
+
+      // Initialize mem0
+      this.memory = new Memory(memoryConfig);
 
       this.initialized = true;
     } catch (error) {
