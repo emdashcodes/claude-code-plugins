@@ -1,0 +1,29 @@
+{
+  "storage": {
+    "mem0HistoryPath": "~/.claude/mem0/history.db",
+    "mem0VectorPath": "~/.claude/mem0/vectors.db",
+    "sessionCachePath": "~/.claude/mem0/sessions.db"
+  },
+  "apiKey": null,
+  "customPrompt": "Extract ONLY deeply personal, long-term information about the user as a person. Focus STRICTLY on:\n- Personal preferences (favorite colors, foods, interests, hobbies)\n- Important relationships (family, friends, pets - include names and relationships)\n- Significant life events and emotions (feelings, burnout, stress, happiness)\n- Career role and company (high-level only - job title and employer)\n- Long-term goals and values\n- Personal contact information (email addresses, phone numbers)\n\nDO NOT extract anything about:\n- ANY specific projects, features, or tasks they're working on\n- Technical implementations (UI features, components, code structure, frameworks)\n- Tools, dependencies, packages, or technologies (pnpm, React, TypeScript, databases, etc.)\n- Work processes or methodologies\n- Temporary work states or current tasks (\"I'm implementing...\", \"I'm building...\", \"I'm debugging...\")\n- System configurations or file structures\n- Debugging or development activities\n- Project architecture or codebase structure\n\nCRITICAL: When extracting emotional states, preserve the user's actual words and feelings:\n- \"feeling tired\" → Extract as \"User is feeling tired\"\n- \"exhausted from work\" → Extract as \"User is exhausted from work\"\n- \"burnt out\" → Extract as \"User is burnt out\"\n\nExamples:\nInput: I love hiking and my favorite food is sushi.\nOutput: {\"facts\": [\"User enjoys hiking\", \"User's favorite food is sushi\"]}\n\nInput: My partner Jamie and I have been together for 5 years.\nOutput: {\"facts\": [\"User has a partner named Jamie\", \"User has been in relationship for 5 years\"]}\n\nInput: I'm feeling really tired today.\nOutput: {\"facts\": [\"User is feeling tired today\"]}\n\nInput: Work has been exhausting lately.\nOutput: {\"facts\": [\"User finds work exhausting lately\"]}\n\nInput: I'm burnt out from the daily grind.\nOutput: {\"facts\": [\"User is burnt out from daily work\"]}\n\nInput: My wife Sam always reminds me about work-life balance when I'm working late on React components.\nOutput: {\"facts\": [\"User has a wife named Sam\", \"User's wife Sam reminds them about work-life balance\", \"User values work-life balance\"]}\n\nInput: I'm implementing checkboxes and selection modes in the threads view.\nOutput: {\"facts\": []}\n\nInput: Our project uses pnpm and has separate backend and frontend components.\nOutput: {\"facts\": []}\n\nInput: I'm adding bulk delete functionality to my application.\nOutput: {\"facts\": []}\n\nInput: I work at TechCorp as a Senior Engineer.\nOutput: {\"facts\": [\"User works at TechCorp as a Senior Engineer\"]}\n\nInput: I use React for the frontend.\nOutput: {\"facts\": []}\n\nInput: We're using TypeScript in our codebase.\nOutput: {\"facts\": []}\n\nInput: My personal email is user@example.com\nOutput: {\"facts\": [\"User's personal email is user@example.com\"]}\n\nReturn facts in JSON format as shown above. Be extremely conservative about technical details - when in doubt about project/code content, DO NOT extract. But DO extract genuine personal information, relationships, emotions, and preferences.",
+  "mem0": {
+    "llm": {
+      "provider": "claude_code",
+      "model": "claude-haiku-4-5-20251001",
+      "modelProperties": {
+        "maxTurns": 1,
+        "maxTokens": 4096,
+        "allowedTools": ["Read", "Grep", "Glob"],
+        "claudeCodePath": "/Users/emdash/.claude/local/claude"
+      }
+    },
+    "embedder": {
+      "provider": "openai",
+      "model": "text-embedding-3-small"
+    },
+    "vectorStore": {
+      "provider": "memory",
+      "dimension": 1536
+    }
+  }
+}
