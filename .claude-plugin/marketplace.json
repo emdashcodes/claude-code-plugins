@@ -12,18 +12,23 @@
     {
       "name": "claude-code-meta",
       "source": "./plugins/claude-code-meta",
-      "description": "Essential toolkit for building and configuring Claude Code plugins, skills, hooks, and automation workflows",
-      "version": "1.0.0",
+      "description": "Complete toolkit for building and distributing Claude Code plugins, skills, hooks, subagents, slash commands, marketplaces, and MCP servers",
+      "version": "1.1.0",
       "author": {
         "name": "Em"
       },
       "repository": "https://github.com/emdashcodes/claude-code-plugins",
       "license": "MIT",
-      "keywords": ["claude-code", "hooks", "subagents", "skills", "development", "automation", "configuration"],
+      "keywords": ["claude-code", "plugins", "marketplaces", "hooks", "subagents", "slash-commands", "skills", "mcp", "development", "automation", "configuration"],
       "category": "development-tools",
-      "strict": false,
+      "strict": true,
       "skills": [
-        "./skills/claude-code-hooks"
+        "./skills/claude-code-hooks",
+        "./skills/claude-code-slash-commands",
+        "./skills/claude-code-subagents",
+        "./skills/claude-code-plugins",
+        "./skills/claude-code-mcp",
+        "./skills/claude-code-skills"
       ]
     },
     {
@@ -38,7 +43,7 @@
       "license": "MIT",
       "keywords": ["claude-code", "mermaid", "diagrams", "visualization", "image-generation", "documentation"],
       "category": "development-tools",
-      "strict": false,
+      "strict": true,
       "commands": [
         "./commands/convert.md"
       ],
@@ -47,18 +52,38 @@
       ]
     },
     {
-      "name": "ada-memory",
-      "source": "./plugins/ada-memory",
-      "description": "Intelligent memory system with automatic extraction and injection of relevant context from conversation history",
+      "name": "google-docs-reader",
+      "source": "./plugins/google-docs-reader",
+      "description": "Read and analyze Google Docs, Sheets, and Slides by exporting them to local formats (DOCX, XLSX, PPTX) via browser download.",
       "version": "1.0.0",
       "author": {
         "name": "Em"
       },
       "repository": "https://github.com/emdashcodes/claude-code-plugins",
       "license": "MIT",
-      "keywords": ["claude-code", "memory", "context", "ai", "conversation-history", "semantic-search"],
-      "category": "development-tools",
-      "strict": false
+      "keywords": ["google-docs", "google-sheets", "google-slides", "google-drive", "document-analysis", "export"],
+      "category": "productivity",
+      "strict": true,
+      "skills": [
+        "./skills/google-docs-reader"
+      ]
+    },
+    {
+      "name": "quill-export",
+      "source": "./plugins/quill-export",
+      "description": "Extract meeting recordings and transcripts from the Quill macOS app database with AI summary and cross-linking.",
+      "version": "1.0.0",
+      "author": {
+        "name": "Em"
+      },
+      "repository": "https://github.com/emdashcodes/claude-code-plugins",
+      "license": "MIT",
+      "keywords": ["quill", "meetings", "transcripts", "recordings", "macos", "export"],
+      "category": "productivity",
+      "strict": true,
+      "skills": [
+        "./skills/quill-export"
+      ]
     }
   ]
 }

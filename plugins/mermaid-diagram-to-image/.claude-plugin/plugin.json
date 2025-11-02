@@ -1,0 +1,9 @@
+{
+  "name": "mermaid-diagram-to-image",
+  "version": "1.0.0",
+  "description": "Convert Mermaid diagrams to images (PNG, SVG, PDF) using mermaid-cli.",
+  "author": {
+    "name": "Em"
+  },
+  "license": "MIT"
+}

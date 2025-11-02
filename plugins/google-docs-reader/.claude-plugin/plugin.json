@@ -1,0 +1,9 @@
+{
+  "name": "google-docs-reader",
+  "version": "1.0.0",
+  "description": "Read and analyze Google Docs, Sheets, and Slides by exporting them to local formats (DOCX, XLSX, PPTX) via browser download.",
+  "author": {
+    "name": "Em"
+  },
+  "license": "MIT"
+}
