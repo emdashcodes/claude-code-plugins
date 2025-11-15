@@ -1,0 +1,12 @@
+{
+  "name": "rough-js-graphics-skill",
+  "version": "1.0.0",
+  "description": "Generate hand-drawn style graphics using Rough.js",
+  "type": "module",
+  "dependencies": {
+    "canvas": "^2.11.2",
+    "jsdom": "^27.2.0",
+    "roughjs": "^4.6.6",
+    "svg2roughjs": "^3.2.1"
+  }
+}

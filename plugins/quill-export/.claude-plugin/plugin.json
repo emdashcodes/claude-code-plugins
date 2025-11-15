@@ -1,9 +1,0 @@
-{
-  "name": "quill-export",
-  "version": "1.0.0",
-  "description": "Extract meeting recordings and transcripts from the Quill macOS app database with AI summary and cross-linking.",
-  "author": {
-    "name": "Em"
-  },
-  "license": "MIT"
-}

@@ -52,10 +52,10 @@ The simplest approach is to use both scripts together:
 
 ```bash
 # 1. Export the Google Doc
-EXPORTED=$(python3 scripts/export_gdoc.py "<google-drive-url-or-file>")
+EXPORTED=$(python3 ${CLAUDE_PLUGIN_ROOT}/skills/google-docs-reader/scripts/export_gdoc.py "<google-drive-url-or-file>")
 
 # 2. Read the exported file
-python3 scripts/read_exported_doc.py "$EXPORTED"
+python3 ${CLAUDE_PLUGIN_ROOT}/skills/google-docs-reader/scripts/read_exported_doc.py "$EXPORTED"
 ```
 
 ### Step-by-Step Workflow
@@ -65,7 +65,7 @@ python3 scripts/read_exported_doc.py "$EXPORTED"
 Run the export script with your Google Docs URL or file:
 
 ```bash
-python3 scripts/export_gdoc.py <input>
+python3 ${CLAUDE_PLUGIN_ROOT}/skills/google-docs-reader/scripts/export_gdoc.py <input>
 ```
 
 Where `<input>` can be:
@@ -86,7 +86,7 @@ The script will:
 Read the exported file using the integrated reading script:
 
 ```bash
-python3 scripts/read_exported_doc.py <exported-file>
+python3 ${CLAUDE_PLUGIN_ROOT}/skills/google-docs-reader/scripts/read_exported_doc.py <exported-file>
 ```
 
 This automatically uses the appropriate tool based on file type:
