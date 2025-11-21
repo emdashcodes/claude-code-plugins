@@ -1,8 +1,8 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python3.12
 """
-Quick image cropping using PIL/Pillow - no AI required
+Quick image cropping using PIL/Pillow
 
-Fast, free, and deterministic cropping for simple tasks.
+Deterministic cropping for simple tasks.
 """
 
 import argparse
@@ -55,7 +55,7 @@ def crop_image(input_path: str, output_path: str, left: int = 0, top: int = 0,
     output_file.parent.mkdir(parents=True, exist_ok=True)
     cropped.save(output_path)
 
-    print(f"✅ Saved to: {output_path}")
+    print(f"Saved to: {output_path}")
 
 
 def main():

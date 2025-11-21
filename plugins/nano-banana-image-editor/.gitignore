@@ -1,0 +1,7 @@
+# Config file containing API keys
+.nano-banana-config.json
+
+# Python virtual environment
+skills/nano-banana-image-editor/.venv/
+
+__pycache__
