@@ -170,13 +170,21 @@ git tag <plugin-name>/vX.Y.Z
 git push --tags
 ```
 
-**5. Create GitHub Release (Optional)**
+**5. Create GitHub Release**
 
 ```bash
 gh release create <plugin-name>/vX.Y.Z \
-  --title "<plugin-name> vX.Y.Z - Title" \
-  --notes "Release notes from CHANGELOG.md"
+  --title "<plugin-name> vX.Y.Z" \
+  --notes "## Fixed
+
+- Bug fix description
+
+## Added
+
+- New feature description"
 ```
+
+Copy the relevant sections from CHANGELOG.md for the release notes.
 
 ### Why Plugin-Prefixed Tags?
 
