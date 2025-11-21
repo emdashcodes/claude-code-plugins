@@ -99,7 +99,8 @@
       "category": "productivity",
       "strict": true,
       "commands": [
-        "./commands/image.md"
+        "./commands/image.md",
+        "./commands/upgrade.md"
       ],
       "skills": [
         "./skills/nano-banana-image-editor"
