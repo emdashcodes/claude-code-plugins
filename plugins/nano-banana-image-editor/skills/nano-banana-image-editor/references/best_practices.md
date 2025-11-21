@@ -250,8 +250,8 @@ Enable `--search` flag for prompts that benefit from real-time or factual inform
 
 - ❌ Using double quotes with dollar signs: `"Menu: Espresso $3, Latte $4"`
 - ✅ Using single quotes: `'Menu: Espresso $3, Latte $4'`
-- ✅ Or escaping special chars: `"Menu: Espresso \$3, Latte \$4"`
-- **Why:** In bash, double-quoted strings expand `$variable` syntax. Characters like `$`, `!`, `` ` ``, `\` need escaping or single quotes
+- ✅ Or escaping special chars: `"Menu: Espresso \\$3, Latte \\$4"`
+- **Why:** In bash, double-quoted strings expand `$variable` syntax. Characters like dollar signs, exclamation marks, backticks, and backslashes need escaping or single quotes
 - **Common issue:** Prompts with prices (`$3.50`) or other special characters get corrupted when passed through bash
 
 ## 13. Quality Checklist

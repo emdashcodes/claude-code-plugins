@@ -1,6 +1,6 @@
 ---
 name: nano-banana-image-editor
-description: Edit and manipulate images using Google's Gemini 3 Pro Image model ("Nano Banana") via natural language prompts. Use this skill when users request image creation (photos, illustrations, icons, infographics) or editing tasks (removing objects, changing backgrounds, text overlays, cropping). Supports reference images for character consistency and style transfer. Includes Google Search grounding for real-time factual content (weather, sports, scientific data) - no need to search separately when creating infographics or factual visualizations.
+description: Edit and manipulate images using natural language prompts. Use this skill when users request image creation (photos, illustrations, icons, infographics) or editing tasks (removing objects, changing backgrounds, text overlays, cropping). Supports reference images for character consistency and style transfer. Supports Google Search grounding for real-time factual content (weather, sports, scientific data) - no need to search separately when creating infographics or factual visualizations.
 ---
 
 # Image Editor
@@ -295,8 +295,8 @@ ${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/.venv/bin/python3 ${CLAUDE
 - **Cause:** When using double quotes in bash, `$variable` syntax triggers variable expansion
 - **Solutions:**
   - Use single quotes instead of double quotes: `'Espresso $3, Latte $4'`
-  - Escape dollar signs with backslash: `"Espresso \$3, Latte \$4"`
-  - Other special characters to watch: `!`, `` ` ``, `\`, `$`, `"`, `'`
+  - Escape dollar signs with backslash: `"Espresso \\$3, Latte \\$4"`
+  - Other special characters to watch: exclamation marks, backticks, backslashes, dollar signs, quotes
 
 **Example:**
 

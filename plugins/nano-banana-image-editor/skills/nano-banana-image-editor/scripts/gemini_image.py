@@ -134,12 +134,10 @@ def generate_image(
 
     config = types.GenerateContentConfig(**config_params)
 
-    # Debug: Show what we're about to send
-    print(f"DEBUG: Making API call to gemini-3-pro-image-preview")
-    print(f"DEBUG: Content parts: {len(content_parts)} items")
-    print(f"DEBUG: Resolution: {resolution}, Aspect ratio: {aspect_ratio}")
-    print(f"DEBUG: Search grounding: {enable_search}")
-    print(f"DEBUG: Sending request...")
+    # Show API call info
+    print(f"Making API call to gemini-3-pro-image-preview")
+    print(f"Resolution: {resolution}, Aspect ratio: {aspect_ratio}")
+    print(f"Search grounding: {enable_search}")
 
     import time
     start_time = time.time()
@@ -151,22 +149,16 @@ def generate_image(
             config=config
         )
         elapsed = time.time() - start_time
-        print(f"DEBUG: API call completed in {elapsed:.2f} seconds")
+        print(f"API call completed in {elapsed:.2f} seconds")
     except Exception as e:
         elapsed = time.time() - start_time
-        print(f"DEBUG: API call failed after {elapsed:.2f} seconds")
+        print(f"API call failed after {elapsed:.2f} seconds")
         print(f"Error: Error generating content: {e}", file=sys.stderr)
         sys.exit(1)
 
-    # Debug: Print response structure
-    print(f"DEBUG: Response type: {type(response)}")
-    print(f"DEBUG: Has parts: {hasattr(response, 'parts')}")
-
     # Save the image
     if hasattr(response, 'parts'):
-        print(f"DEBUG: Number of parts: {len(response.parts)}")
         for i, part in enumerate(response.parts):
-            print(f"DEBUG: Part {i} type: {type(part)}")
             # New API: check for as_image() method
             if hasattr(part, 'as_image'):
                 try:
@@ -177,7 +169,7 @@ def generate_image(
                     print(f"✅ Image saved to: {output_path}")
                     return
                 except Exception as e:
-                    print(f"DEBUG: Failed to save image from part {i}: {e}")
+                    pass  # Try next part
             # Fall back to inline_data for compatibility
             elif hasattr(part, 'inline_data') and part.inline_data and hasattr(part.inline_data, 'data'):
                 output_file = Path(output_path)
@@ -188,7 +180,7 @@ def generate_image(
                 print(f"   File size: {len(part.inline_data.data)} bytes")
                 return
             elif hasattr(part, 'text') and part.text:
-                print(f"DEBUG: Part {i} has text: {part.text[:200]}...")
+                pass  # Skip text parts
 
     # If no image in response, print the text response
     print("Error: No image data found in response", file=sys.stderr)

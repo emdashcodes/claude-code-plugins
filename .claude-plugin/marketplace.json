@@ -86,26 +86,9 @@
       ]
     },
     {
-      "name": "audio-transcription",
-      "source": "./plugins/audio-transcription",
-      "description": "Transcribe audio and video files to text using OpenAI's Whisper model with support for multiple output formats.",
-      "version": "1.0.0",
-      "author": {
-        "name": "Em"
-      },
-      "repository": "https://github.com/emdashcodes/claude-code-plugins",
-      "license": "MIT",
-      "keywords": ["whisper", "transcription", "audio", "video", "speech-to-text", "subtitles"],
-      "category": "productivity",
-      "strict": true,
-      "skills": [
-        "./skills/audio-transcription"
-      ]
-    },
-    {
       "name": "nano-banana-image-editor",
       "source": "./plugins/nano-banana-image-editor",
-      "description": "AI-powered image editing using Google's Gemini 3 Pro Image (Nano Banana Pro) and non-AI tools (PIL/Pillow) for quick edits. Generate new images or remove objects, change backgrounds, crop, and manipulate images with natural language.",
+      "description": "Create and edit images with natural language using Gemini 3 Pro Image. Use for image generation, photo editing, infographics, icons, style transfer, and text rendering. Includes Google Search grounding for factual content and PIL/Pillow for quick crops.",
       "version": "1.0.0",
       "author": {
         "name": "Em"
@@ -115,6 +98,9 @@
       "keywords": ["gemini", "image-editing", "nano-banana", "pillow", "pil", "ai-image", "photo-editing", "image-generation", "cropping"],
       "category": "productivity",
       "strict": true,
+      "commands": [
+        "./commands/image.md"
+      ],
       "skills": [
         "./skills/nano-banana-image-editor"
       ]

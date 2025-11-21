@@ -105,6 +105,96 @@ Extract meeting recordings and transcripts from the Quill macOS app database wit
 /plugin install quill-export@emdashcodes-claude-code-plugins
 ```
 
+## nano-banana-image-editor
+
+Create and edit images with natural language using Gemini 3 Pro Image.
+
+**What's included:**
+
+- **nano-banana-image-editor skill** - Complete image creation and editing workflow
+
+**Use cases:**
+
+- Image generation (photos, illustrations, icons, infographics)
+- Photo editing (remove objects, change backgrounds, style transfer)
+- Text rendering (menus, posters, signs, labels)
+- Google Search grounding for factual infographics (weather, sports, real-time data)
+- Quick crops and basic edits with PIL/Pillow
+- High-resolution output (1K, 2K, 4K) with custom aspect ratios
+
+**Requirements:**
+
+- Google Gemini API key
+- Python 3.10+ with google-genai and Pillow packages
+
+```bash
+# Install Nano Banana image editor
+/plugin install nano-banana-image-editor@emdashcodes-claude-code-plugins
+```
+
+## google-calendar
+
+Full read-write Google Calendar access with automatic event management and quick slash commands.
+
+**What's included:**
+
+- **google-calendar skill** - Complete calendar management workflow
+- **setup command** - Interactive OAuth setup wizard
+
+**Use cases:**
+
+- Creating, updating, and deleting calendar events
+- Searching for events and finding free time
+- Managing multiple calendars
+- Scheduling meetings and appointments
+- Viewing upcoming events and agendas
+
+**Requirements:**
+
+- Google Cloud project with Calendar API enabled
+- OAuth 2.0 credentials
+- Google account
+
+```bash
+# Install Google Calendar
+/plugin install google-calendar@emdashcodes-claude-code-plugins
+
+# Run setup wizard
+/google-calendar:setup
+```
+
+## google-gmail
+
+Full email management with Gmail API. Send, read, search, organize messages, manage drafts, labels, and attachments with multi-account support.
+
+**What's included:**
+
+- **google-gmail skill** - Complete email management workflow with profile-based authentication
+- **setup command** - Interactive OAuth setup wizard for multiple accounts
+
+**Use cases:**
+
+- Reading and searching emails
+- Sending messages with attachments
+- Managing drafts and labels
+- Organizing inbox with filters
+- Multi-account email management
+- Batch email operations
+
+**Requirements:**
+
+- Google Cloud project with Gmail API enabled
+- OAuth 2.0 credentials
+- Google account(s)
+
+```bash
+# Install Google Gmail
+/plugin install google-gmail@emdashcodes-claude-code-plugins
+
+# Run setup wizard
+/google-gmail:setup
+```
+
 ## Install the Marketplace
 
 Add this marketplace to Claude Code:
