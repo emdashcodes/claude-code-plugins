@@ -89,7 +89,7 @@
       "name": "nano-banana-image-editor",
       "source": "./plugins/nano-banana-image-editor",
       "description": "Create and edit images with natural language using Gemini 3 Pro Image. Use for image generation, photo editing, infographics, icons, style transfer, and text rendering. Includes Google Search grounding for factual content and PIL/Pillow for quick crops.",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "author": {
         "name": "Em"
       },

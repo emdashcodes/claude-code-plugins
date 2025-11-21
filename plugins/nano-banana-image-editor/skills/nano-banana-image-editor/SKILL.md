@@ -125,6 +125,31 @@ ${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/.venv/bin/python3 ${CLAUDE
 
 ### Advanced Multi-Image Features
 
+#### Recreating Templates with Different Characters
+
+**Important**: When recreating memes, comics, or templates with different characters, **always pass both the template AND the character references**.
+
+```bash
+${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/.venv/bin/python3 ${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/scripts/create_image.py \
+  output.png "Recreate this meme template using these characters" \
+  --reference template.png --reference character1.png --reference character2.png \
+  --resolution 2K --aspect-ratio 16:9
+```
+
+**Why both?**
+
+- The **template/meme reference** provides the composition, layout, poses, and panel structure
+- The **character references** provide facial features, hairstyles, and distinctive characteristics to maintain
+
+**Example: Recreating a two-panel comic meme**
+
+```bash
+${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/.venv/bin/python3 ${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/scripts/create_image.py \
+  my-meme.png "Recreate this two-panel comic using these two women as the characters. Maintain the exact composition and poses from the template." \
+  --reference original-meme.png --reference my-characters.png \
+  --resolution 2K --aspect-ratio 16:9
+```
+
 #### Character Consistency (Up to 5 People)
 
 Create group photos maintaining facial resemblance:
@@ -225,6 +250,7 @@ ${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/.venv/bin/python3 ${CLAUDE
 - **Iterative editing**: Make one change at a time for better results
 - **Reference locations**: Use "top left", "bottom right", "center" to specify areas
 - **Use reference images**: Provide style examples, object references, or character photos when appropriate
+- **Pass ALL relevant references**: When recreating templates/memes with different characters, pass both the template image AND the character images as references
 - **Enable search for facts**: Add `--search` when generating content requiring real-time information
 
 **For comprehensive prompting strategies, see `references/prompting_guide.md`**
@@ -288,6 +314,12 @@ ${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/.venv/bin/python3 ${CLAUDE
 - Be more specific in the prompt
 - Try breaking complex edits into multiple steps
 - Ensure input image quality is sufficient
+
+**"MALFORMED_FUNCTION_CALL" error when editing:**
+
+- **Do NOT request watermark removal** - Gemini blocks prompts mentioning "remove watermark" to protect SynthID watermarks
+- Avoid prompts like "remove the watermark" or "clean up watermarks"
+- This is a content policy restriction, not a technical limitation
 
 **Prompts with dollar signs or special characters getting stripped:**
 

@@ -118,8 +118,8 @@ def generate_image(
     # Build image config with aspect ratio and resolution
     # Requires google-genai >= 1.48.0 (Python 3.10+)
     image_config = types.ImageConfig(
-        aspectRatio=aspect_ratio,
-        imageSize=resolution
+        aspect_ratio=aspect_ratio,
+        image_size=resolution
     )
 
     # Build generation config with image settings
@@ -157,7 +157,7 @@ def generate_image(
         sys.exit(1)
 
     # Save the image
-    if hasattr(response, 'parts'):
+    if hasattr(response, 'parts') and response.parts is not None:
         for i, part in enumerate(response.parts):
             # New API: check for as_image() method
             if hasattr(part, 'as_image'):
