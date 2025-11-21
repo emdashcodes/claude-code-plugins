@@ -4,59 +4,45 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Repository Overview
 
-This is a **working directory** containing three separate Claude Code plugin marketplace repositories:
-
-- **anthropics-skills/** - Official Anthropic example skills demonstrating creative, technical, and enterprise capabilities
-- **automattic/** - Automattic's internal Claude Code plugins for workflow orchestration
-- **emdashcodes/** - Em's personal Claude Code plugins for development workflows
-
-Each subdirectory is its own independent git repository with its own `.claude-plugin/marketplace.json` configuration and plugin structure.
+This is **emdashcodes-claude-code-plugins** - Em's personal Claude Code plugin marketplace featuring specialized plugins for development workflows, productivity, and AI-powered tools.
 
 ## Architecture
 
-### Plugin Marketplace Structure
-
-Each marketplace follows the Claude Code plugin specification:
+### Plugin Structure
 
 ```text
-marketplace-root/
+emdashcodes/
 ├── .claude-plugin/
 │   └── marketplace.json          # Plugin registry
-├── plugins/                       # (automattic, emdashcodes only)
+├── plugins/
 │   └── plugin-name/
-│       ├── agents/                # Specialized agents (optional)
+│       ├── CHANGELOG.md           # Version history
 │       ├── commands/              # Slash commands (optional)
-│       └── skills/                # Skills with SKILL.md files (optional)
-└── skill-name/                    # (anthropics-skills only)
-    └── SKILL.md                   # Skill entrypoint
+│       │   └── command.md
+│       ├── skills/                # Skills with SKILL.md files (optional)
+│       │   └── skill-name/
+│       │       └── SKILL.md
+│       └── scripts/               # Helper scripts (optional)
+└── CLAUDE.md                      # This file
 ```
 
 ### Skills Specification
 
-All skills must follow the Agent Skills Spec (`anthropics-skills/agent_skills_spec.md`):
+All skills must have a `SKILL.md` file with YAML frontmatter:
 
-- **Required file**: `SKILL.md` with YAML frontmatter
 - **Required frontmatter fields**:
   - `name` - hyphen-case, lowercase alphanumeric + hyphens
   - `description` - when Claude should use this skill
 - **Optional frontmatter fields**:
   - `license`
-  - `allowed-tools` - pre-approved tools (Claude Code only)
   - `metadata` - custom key-value pairs
 - **Body**: Markdown instructions, examples, and guidelines
 
-## Working with Marketplaces
+## Using This Marketplace
 
-### Adding Marketplaces to Claude Code
+### Adding to Claude Code
 
 ```bash
-# Anthropic's official skills
-/plugin marketplace add anthropics/skills
-
-# Automattic's plugins (private)
-/plugin marketplace add git@github.a8c.com:Automattic/claude-code-plugins.git
-
-# Em's personal plugins
 /plugin marketplace add emdashcodes/claude-code-plugins
 ```
 
@@ -67,95 +53,60 @@ All skills must follow the Agent Skills Spec (`anthropics-skills/agent_skills_sp
 /plugin
 
 # Install specific plugin
-/plugin install <plugin-name>@<marketplace-name>
-
-# Example
-/plugin install meta-skills@anthropics-skills
+/plugin install <plugin-name>@emdashcodes-claude-code-plugins
 ```
 
-### Marketplace Configuration
+## Creating New Plugins
 
-Each marketplace is defined in `.claude-plugin/marketplace.json`:
+1. **Create plugin directory** under `plugins/`:
 
-```json
-{
-  "name": "marketplace-name",
-  "owner": { "name": "...", "email/url": "..." },
-  "metadata": { "description": "...", "version": "..." },
-  "plugins": [
-    {
-      "name": "plugin-name",
-      "description": "...",
-      "source": "./path/to/plugin",
-      "strict": false,
-      "skills": ["./skill-path"],
-      "commands": ["./command-path.md"],
-      "agents": ["./agent-path.md"]
-    }
-  ]
-}
-```
-
-## Creating New Skills
-
-1. **Choose the appropriate marketplace**:
-   - `anthropics-skills/` - Skills demonstrating general Claude capabilities
-   - `automattic/plugins/` - Automattic-specific workflows
-   - `emdashcodes/plugins/` - Personal development tools
-
-2. **Use the template**: Reference `anthropics-skills/template-skill/SKILL.md`
-
-3. **Create skill directory**:
-
-   ```text
-   skill-name/
-   ├── SKILL.md              # Required entrypoint
-   ├── scripts/              # Optional helper scripts
-   └── reference/            # Optional reference docs
+   ```bash
+   mkdir -p plugins/my-plugin/{skills,commands,scripts}
    ```
 
-4. **Write SKILL.md**:
-
+2. **Add CHANGELOG.md**:
 
    ```markdown
-   ---
-   name: my-skill-name
-   description: Clear description of what this skill does and when to use it
-   ---
+   # Changelog
 
-   # Instructions here
+   ## [1.0.0] - YYYY-MM-DD
+
+   ### Added
+   - Initial release
    ```
 
-5. **Register in marketplace.json**: Add the skill path to the appropriate plugin
+3. **Create skills/commands** as needed
 
-## Git Workflow
+4. **Register in marketplace.json**:
 
-**IMPORTANT**: Each subdirectory is a separate, independent git repository.
-
-### Working in a Subdirectory
-
-```bash
-# Navigate to the subdirectory first
-cd anthropics-skills  # or automattic/ or emdashcodes/
-
-# Then use normal git commands
-git status
-git add .
-git commit -m "type: short message"
-git push
-```
+   ```json
+   {
+     "name": "my-plugin",
+     "source": "./plugins/my-plugin",
+     "description": "Plugin description",
+     "version": "1.0.0",
+     "author": { "name": "Em" },
+     "repository": "https://github.com/emdashcodes/claude-code-plugins",
+     "license": "MIT",
+     "keywords": ["keyword1", "keyword2"],
+     "category": "productivity",
+     "strict": true,
+     "skills": ["./skills/my-skill"],
+     "commands": ["./commands/my-command.md"]
+   }
+   ```
 
 ## Versioning & Releases
 
 ### Plugin-Prefixed Tags
 
-Since each marketplace repository may contain multiple plugins with independent version cycles, use **plugin-prefixed tags** instead of generic version tags.
+Since this repository contains multiple plugins with independent version cycles, use **plugin-prefixed tags**:
 
 **Tag Format:** `<plugin-name>/v<semver>`
 
 **Examples:**
-- `context-a8c/v0.1.3` - ContextA8C plugin version 0.1.3
-- `my-plugin/v1.2.0` - MyPlugin version 1.2.0
+- `nano-banana-image-editor/v1.0.1`
+- `google-calendar/v1.0.0`
 
 ### Release Process
 
@@ -195,9 +146,6 @@ Update the plugin's version in `.claude-plugin/marketplace.json`:
 Use conventional commit format with version in message:
 
 ```bash
-# Navigate to marketplace directory
-cd automattic/  # or emdashcodes/
-
 # Commit with semantic type prefix
 git add -A
 git commit -m "fix: description of changes vX.Y.Z"
@@ -239,15 +187,14 @@ gh release create <plugin-name>/vX.Y.Z \
 
 ### Upgrade Commands
 
-Plugins can implement upgrade commands that automatically detect and install plugin-specific tagged releases:
-
-```bash
-# Example: ContextA8C upgrade command
-/context-a8c:upgrade
-```
+Plugins can implement upgrade commands that automatically detect and install plugin-specific tagged releases.
 
 Upgrade commands should:
 - Look for plugin-prefixed tags: `git tag -l '<plugin-name>/v*'`
 - Checkout the specific tag: `git checkout <plugin-name>/v<version>`
 - Rebuild the plugin after checkout
 - Prompt user to restart Claude Code
+
+## License
+
+MIT License - See LICENSE file for details.
