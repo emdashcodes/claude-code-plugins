@@ -103,26 +103,9 @@
       ]
     },
     {
-      "name": "video-frame-analysis",
-      "source": "./plugins/video-frame-analysis",
-      "description": "Extract, analyze, and categorize frames from video files to identify slides, demos, and meaningful content. Uses scene detection and multimodal AI analysis.",
-      "version": "1.0.0",
-      "author": {
-        "name": "Em"
-      },
-      "repository": "https://github.com/emdashcodes/claude-code-plugins",
-      "license": "MIT",
-      "keywords": ["video", "frames", "scene-detection", "ffmpeg", "analysis", "categorization", "presentation", "demo"],
-      "category": "productivity",
-      "strict": true,
-      "skills": [
-        "./skills/video-frame-analysis"
-      ]
-    },
-    {
       "name": "nano-banana-image-editor",
       "source": "./plugins/nano-banana-image-editor",
-      "description": "AI-powered image editing using Google's Gemini 2.5 Flash Image (Nano Banana) and non-AI tools (PIL/Pillow) for quick edits. Generate new images or remove objects, change backgrounds, crop, and manipulate images with natural language.",
+      "description": "AI-powered image editing using Google's Gemini 3 Pro Image (Nano Banana Pro) and non-AI tools (PIL/Pillow) for quick edits. Generate new images or remove objects, change backgrounds, crop, and manipulate images with natural language.",
       "version": "1.0.0",
       "author": {
         "name": "Em"
@@ -137,20 +120,43 @@
       ]
     },
     {
-      "name": "sketch-graphics",
-      "source": "./plugins/sketch-graphics",
-      "description": "Create hand-drawn style graphics using Rough.js with perfect text accuracy. Generate sketchy diagrams, flowcharts, and illustrations that look like whiteboard sketches. Hybrid workflows with Gemini icons and PIL compositing.",
+      "name": "google-calendar",
+      "source": "./plugins/google-calendar",
+      "description": "Full read-write Google Calendar access with automatic event management and quick slash commands",
       "version": "1.0.0",
       "author": {
         "name": "Em"
       },
       "repository": "https://github.com/emdashcodes/claude-code-plugins",
       "license": "MIT",
-      "keywords": ["roughjs", "hand-drawn", "sketch", "diagrams", "whiteboard", "flowcharts", "graphics", "canvas"],
+      "keywords": ["google-calendar", "scheduling", "events", "time-management", "productivity"],
       "category": "productivity",
       "strict": true,
+      "commands": [
+        "./commands/setup.md"
+      ],
       "skills": [
-        "./skills/sketch-graphics"
+        "./skills/google-calendar"
+      ]
+    },
+    {
+      "name": "google-gmail",
+      "source": "./plugins/google-gmail",
+      "description": "Full email management with Gmail API. Send, read, search, organize messages, manage drafts, labels, and attachments. Multi-account support with profile-based authentication",
+      "version": "0.1.0",
+      "author": {
+        "name": "Em"
+      },
+      "repository": "https://github.com/emdashcodes/claude-code-plugins",
+      "license": "MIT",
+      "keywords": ["google-gmail", "email", "gmail", "messaging", "productivity", "multi-account", "labels", "attachments"],
+      "category": "productivity",
+      "strict": true,
+      "commands": [
+        "./commands/setup.md"
+      ],
+      "skills": [
+        "./skills/google-gmail"
       ]
     }
   ]

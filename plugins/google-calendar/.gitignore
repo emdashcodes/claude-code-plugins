@@ -1,0 +1,24 @@
+# Google Calendar OAuth credentials and tokens
+google-calendar-oauth.json
+google-calendar-token.json
+google-calendar-config.json
+
+# Node.js dependencies
+node_modules/
+
+# TypeScript build output
+dist/
+
+# Copied distribution files
+skills/google-calendar/scripts/dist/
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# macOS
+.DS_Store

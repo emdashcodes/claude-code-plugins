@@ -1,0 +1,30 @@
+# Dependencies
+node_modules/
+package-lock.json
+
+# Build output
+dist/
+skills/google-gmail/scripts/dist/
+
+# Credentials and tokens (NEVER commit these)
+google-gmail-oauth.json
+google-gmail-token.json
+google-gmail-config.json
+profiles/*/oauth.json
+profiles/*/token.json
+
+# Keep profiles directory structure but not contents
+!profiles/.gitkeep
+
+# OS files
+.DS_Store
+*.swp
+*.swo
+
+# IDE
+.vscode/
+.idea/
+
+# Logs
+*.log
+npm-debug.log*

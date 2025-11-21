@@ -1,0 +1,11 @@
+#!/usr/bin/env node
+
+// Executable wrapper for google-gmail CLI
+// The dist folder is copied here during build (npm run build)
+
+// Set plugin root to ensure correct path resolution
+// This script is in skills/google-gmail/scripts/, plugin root is 3 levels up
+const path = require('path');
+process.env.CLAUDE_PLUGIN_ROOT = path.resolve(__dirname, '../../..');
+
+require('./dist/gmail-cli/index.js');

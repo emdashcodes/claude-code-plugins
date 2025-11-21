@@ -1,0 +1,5 @@
+#!/usr/bin/env node
+
+// Executable wrapper for google-calendar CLI
+// The dist folder is copied here during build (npm run build)
+require('./dist/calendar-cli/index.js');

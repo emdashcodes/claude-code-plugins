@@ -1,0 +1,40 @@
+{
+  "name": "@emdashcodes/google-gmail",
+  "version": "0.1.0",
+  "description": "Google Gmail CLI for Claude Code with full email management and multi-account support",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "bin": {
+    "google-gmail": "./skills/google-gmail/scripts/google-gmail"
+  },
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf dist skills/google-gmail/scripts/dist",
+    "prebuild": "npm run clean",
+    "postbuild": "mkdir -p skills/google-gmail/scripts/dist && cp -r dist/* skills/google-gmail/scripts/dist/"
+  },
+  "dependencies": {
+    "commander": "^12.1.0",
+    "googleapis": "^144.0.0",
+    "mailparser": "^3.7.1",
+    "nodemailer": "^6.9.8",
+    "open": "^10.0.0"
+  },
+  "devDependencies": {
+    "@types/mailparser": "^3.4.6",
+    "@types/node": "^20.0.0",
+    "@types/nodemailer": "^6.4.14",
+    "typescript": "^5.7.2"
+  },
+  "keywords": [
+    "google-gmail",
+    "email",
+    "gmail",
+    "messaging",
+    "productivity",
+    "claude-code"
+  ],
+  "author": "Em Shreve",
+  "license": "MIT"
+}
