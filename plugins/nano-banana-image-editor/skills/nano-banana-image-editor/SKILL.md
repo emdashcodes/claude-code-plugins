@@ -28,7 +28,11 @@ If needed, run the following script to install dependencies:
 ${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/scripts/install_dependencies.sh
 ```
 
-This creates a Python virtual environment at `${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/.venv/` and installs the required packages (google-genai, Pillow).
+This creates a Python virtual environment and installs the required packages (google-genai, Pillow).
+
+**Virtual environment location:**
+- Default: `${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/.venv/`
+- Override: Set `NANO_BANANA_VENV` env var for multi-platform support (e.g., Docker containers)
 
 **API Key Setup:**
 
@@ -36,7 +40,7 @@ This creates a Python virtual environment at `${CLAUDE_PLUGIN_ROOT}/skills/nano-
 2. **Run the setup script** to save the key to the plugin config:
 
    ```bash
-   ${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/.venv/bin/${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/.venv/bin/python3 ${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/scripts/setup-gemini-token.py YOUR_API_KEY
+   ${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/.venv/bin/${NANO_BANANA_VENV:-${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/.venv}/bin/python3 ${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/scripts/setup-gemini-token.py YOUR_API_KEY
    ```
 
    The script will:
@@ -44,7 +48,7 @@ This creates a Python virtual environment at `${CLAUDE_PLUGIN_ROOT}/skills/nano-
    - Save it to `.nano-banana-config.json` in the plugin directory
    - Confirm that Gemini 3 Pro Image model is available
 
-All script examples below use `${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/.venv/bin/python3` to ensure the venv's Python interpreter is used.
+All script examples below use `${NANO_BANANA_VENV:-${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/.venv}/bin/python3` to ensure the venv's Python interpreter is used.
 
 ## How to Use
 
@@ -53,14 +57,14 @@ All script examples below use `${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-ed
 Use the `create_image.py` script to generate new images from natural language prompts:
 
 ```bash
-${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/.venv/bin/python3 ${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/scripts/create_image.py \
+${NANO_BANANA_VENV:-${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/.venv}/bin/python3 ${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/scripts/create_image.py \
   OUTPUT_IMAGE "creation instruction" --resolution 1K --aspect-ratio 1:1
 ```
 
 **Example: Create an icon**
 
 ```bash
-${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/.venv/bin/python3 ${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/scripts/create_image.py \
+${NANO_BANANA_VENV:-${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/.venv}/bin/python3 ${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/scripts/create_image.py \
   cat-icon.png "A playful orange tabby cat icon, simple and clean design" \
   --resolution 1K --aspect-ratio 1:1
 ```
@@ -68,7 +72,7 @@ ${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/.venv/bin/python3 ${CLAUDE
 **Example: Create a high-resolution illustration**
 
 ```bash
-${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/.venv/bin/python3 ${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/scripts/create_image.py \
+${NANO_BANANA_VENV:-${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/.venv}/bin/python3 ${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/scripts/create_image.py \
   sunset.png "A vibrant sunset over mountains with purple and orange sky" \
   --resolution 4K --aspect-ratio 16:9
 ```
@@ -76,7 +80,7 @@ ${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/.venv/bin/python3 ${CLAUDE
 **Example: Create with reference images for style**
 
 ```bash
-${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/.venv/bin/python3 ${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/scripts/create_image.py \
+${NANO_BANANA_VENV:-${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/.venv}/bin/python3 ${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/scripts/create_image.py \
   landscape.png "A mountain landscape in this artistic style" \
   --reference style.png --resolution 2K --aspect-ratio 3:2
 ```
@@ -93,14 +97,14 @@ ${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/.venv/bin/python3 ${CLAUDE
 Use the `edit_image.py` script to edit existing images with natural language prompts:
 
 ```bash
-${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/.venv/bin/python3 ${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/scripts/edit_image.py \
+${NANO_BANANA_VENV:-${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/.venv}/bin/python3 ${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/scripts/edit_image.py \
   INPUT_IMAGE OUTPUT_IMAGE "editing instruction" --resolution 1K --aspect-ratio 1:1
 ```
 
 **Example: Remove text overlay**
 
 ```bash
-${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/.venv/bin/python3 ${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/scripts/edit_image.py \
+${NANO_BANANA_VENV:-${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/.venv}/bin/python3 ${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/scripts/edit_image.py \
   slide.png slide-cleaned.png \
   "Remove the text labels from the top of this diagram"
 ```
@@ -108,7 +112,7 @@ ${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/.venv/bin/python3 ${CLAUDE
 **Example: Background removal with high resolution**
 
 ```bash
-${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/.venv/bin/python3 ${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/scripts/edit_image.py \
+${NANO_BANANA_VENV:-${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/.venv}/bin/python3 ${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/scripts/edit_image.py \
   photo.jpg photo-no-bg.png \
   "Remove the background and make it transparent white" \
   --resolution 2K --aspect-ratio 4:3
@@ -117,7 +121,7 @@ ${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/.venv/bin/python3 ${CLAUDE
 **Example: Style transfer with reference image**
 
 ```bash
-${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/.venv/bin/python3 ${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/scripts/edit_image.py \
+${NANO_BANANA_VENV:-${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/.venv}/bin/python3 ${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/scripts/edit_image.py \
   photo.jpg artistic.png \
   "Apply the artistic style from the reference to this photo" \
   --reference style.png --resolution 2K
@@ -130,7 +134,7 @@ ${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/.venv/bin/python3 ${CLAUDE
 **Important**: When recreating memes, comics, or templates with different characters, **always pass both the template AND the character references**.
 
 ```bash
-${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/.venv/bin/python3 ${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/scripts/create_image.py \
+${NANO_BANANA_VENV:-${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/.venv}/bin/python3 ${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/scripts/create_image.py \
   output.png "Recreate this meme template using these characters" \
   --reference template.png --reference character1.png --reference character2.png \
   --resolution 2K --aspect-ratio 16:9
@@ -144,7 +148,7 @@ ${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/.venv/bin/python3 ${CLAUDE
 **Example: Recreating a two-panel comic meme**
 
 ```bash
-${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/.venv/bin/python3 ${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/scripts/create_image.py \
+${NANO_BANANA_VENV:-${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/.venv}/bin/python3 ${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/scripts/create_image.py \
   my-meme.png "Recreate this two-panel comic using these two women as the characters. Maintain the exact composition and poses from the template." \
   --reference original-meme.png --reference my-characters.png \
   --resolution 2K --aspect-ratio 16:9
@@ -155,7 +159,7 @@ ${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/.venv/bin/python3 ${CLAUDE
 Create group photos maintaining facial resemblance:
 
 ```bash
-${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/.venv/bin/python3 ${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/scripts/create_image.py \
+${NANO_BANANA_VENV:-${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/.venv}/bin/python3 ${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/scripts/create_image.py \
   group.png "Office group photo of these people making funny faces" \
   --reference person1.png --reference person2.png --reference person3.png \
   --resolution 2K --aspect-ratio 5:4
@@ -166,7 +170,7 @@ ${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/.venv/bin/python3 ${CLAUDE
 Blend multiple objects with high fidelity:
 
 ```bash
-${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/.venv/bin/python3 ${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/scripts/create_image.py \
+${NANO_BANANA_VENV:-${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/.venv}/bin/python3 ${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/scripts/create_image.py \
   product.png "Product showcase featuring these items on a marble surface" \
   --reference item1.png --reference item2.png --reference item3.png \
   --resolution 4K --aspect-ratio 16:9
@@ -177,7 +181,7 @@ ${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/.venv/bin/python3 ${CLAUDE
 Edit an image while using additional references:
 
 ```bash
-${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/.venv/bin/python3 ${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/scripts/edit_image.py \
+${NANO_BANANA_VENV:-${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/.venv}/bin/python3 ${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/scripts/edit_image.py \
   background.jpg composite.png \
   "Add these people to the scene, natural lighting" \
   --reference person1.png --reference person2.png \
@@ -189,13 +193,13 @@ ${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/.venv/bin/python3 ${CLAUDE
 Enable real-time information for factual content:
 
 ```bash
-${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/.venv/bin/python3 ${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/scripts/create_image.py \
+${NANO_BANANA_VENV:-${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/.venv}/bin/python3 ${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/scripts/create_image.py \
   weather.png "An infographic about today's weather in San Francisco" \
   --search --resolution 2K --aspect-ratio 3:4
 ```
 
 ```bash
-${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/.venv/bin/python3 ${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/scripts/create_image.py \
+${NANO_BANANA_VENV:-${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/.venv}/bin/python3 ${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/scripts/create_image.py \
   plant-guide.png "Create an educational infographic about String of Turtles houseplant care" \
   --search --resolution 2K --aspect-ratio 3:4
 ```
@@ -228,7 +232,7 @@ ${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/.venv/bin/python3 ${CLAUDE
 **Example with custom resolution and aspect ratio:**
 
 ```bash
-${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/.venv/bin/python3 ${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/scripts/create_image.py \
+${NANO_BANANA_VENV:-${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/.venv}/bin/python3 ${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/scripts/create_image.py \
   banner.png "A website hero banner with mountains and sunrise" \
   --resolution 4K --aspect-ratio 21:9
 ```
@@ -301,7 +305,7 @@ ${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/.venv/bin/python3 ${CLAUDE
 
 **"No Gemini API key configured" error:**
 
-- Run the setup script: `${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/.venv/bin/python3 ${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/scripts/setup-gemini-token.py YOUR_API_KEY`
+- Run the setup script: `${NANO_BANANA_VENV:-${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/.venv}/bin/python3 ${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/scripts/setup-gemini-token.py YOUR_API_KEY`
 
 **"No image in response" message:**
 
@@ -334,15 +338,15 @@ ${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/.venv/bin/python3 ${CLAUDE
 
 ```bash
 # ❌ Wrong - dollar signs get expanded as variables
-${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/.venv/bin/python3 ${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/scripts/create_image.py \
+${NANO_BANANA_VENV:-${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/.venv}/bin/python3 ${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/scripts/create_image.py \
   menu.png "Coffee menu: Espresso $3, Latte $4"
 
 # ✅ Correct - use single quotes
-${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/.venv/bin/python3 ${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/scripts/create_image.py \
+${NANO_BANANA_VENV:-${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/.venv}/bin/python3 ${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/scripts/create_image.py \
   menu.png 'Coffee menu: Espresso $3, Latte $4'
 
 # ✅ Also correct - escape the dollar signs
-${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/.venv/bin/python3 ${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/scripts/create_image.py \
+${NANO_BANANA_VENV:-${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/.venv}/bin/python3 ${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/scripts/create_image.py \
   menu.png "Coffee menu: Espresso \$3, Latte \$4"
 ```
 
@@ -356,15 +360,15 @@ Use the included `quick_crop.py` script for fast, precise cropping:
 
 ```bash
 # Remove 100px from the right edge
-${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/.venv/bin/python3 ${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/scripts/quick_crop.py \
+${NANO_BANANA_VENV:-${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/.venv}/bin/python3 ${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/scripts/quick_crop.py \
   input.png output.png --remove-right 100
 
 # Exact crop box
-${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/.venv/bin/python3 ${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/scripts/quick_crop.py \
+${NANO_BANANA_VENV:-${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/.venv}/bin/python3 ${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/scripts/quick_crop.py \
   input.png output.png --left 0 --top 0 --right 1200 --bottom 800
 
 # Remove pixels from bottom
-${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/.venv/bin/python3 ${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/scripts/quick_crop.py \
+${NANO_BANANA_VENV:-${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/.venv}/bin/python3 ${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/scripts/quick_crop.py \
   input.png output.png --remove-bottom 50
 ```
 

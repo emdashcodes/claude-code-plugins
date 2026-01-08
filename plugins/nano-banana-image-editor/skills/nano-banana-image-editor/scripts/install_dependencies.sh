@@ -21,9 +21,10 @@ PYTHON_VERSION=$($PYTHON_CMD --version 2>&1 | awk '{print $2}')
 echo "✓ Using Python $PYTHON_VERSION"
 echo ""
 
-# Virtual environment path (within the plugin directory)
+# Virtual environment path
+# Override with NANO_BANANA_VENV env var for multi-platform support (e.g., Docker containers)
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-VENV_DIR="$SCRIPT_DIR/../.venv"
+VENV_DIR="${NANO_BANANA_VENV:-$SCRIPT_DIR/../.venv}"
 
 # Check if venv already exists
 if [ -d "$VENV_DIR" ]; then

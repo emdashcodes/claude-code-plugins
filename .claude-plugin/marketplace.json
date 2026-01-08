@@ -35,7 +35,7 @@
       "name": "mermaid-diagram-to-image",
       "source": "./plugins/mermaid-diagram-to-image",
       "description": "Convert Mermaid diagrams to images (PNG, SVG, PDF) using mermaid-cli.",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "author": {
         "name": "Em"
       },
@@ -44,9 +44,6 @@
       "keywords": ["claude-code", "mermaid", "diagrams", "visualization", "image-generation", "documentation"],
       "category": "development-tools",
       "strict": true,
-      "commands": [
-        "./commands/convert.md"
-      ],
       "skills": [
         "./skills/mermaid-diagram-to-image"
       ]
@@ -107,43 +104,43 @@
       ]
     },
     {
-      "name": "google-calendar",
-      "source": "./plugins/google-calendar",
-      "description": "Full read-write Google Calendar access with automatic event management and quick slash commands",
+      "name": "video-toolkit",
+      "source": "./plugins/video-toolkit",
+      "description": "Video editing and analysis with FFmpeg and Whisper. Extract frames, transcribe audio, and perform video operations (clip, merge, split)",
       "version": "1.0.0",
       "author": {
         "name": "Em"
       },
       "repository": "https://github.com/emdashcodes/claude-code-plugins",
       "license": "MIT",
-      "keywords": ["google-calendar", "scheduling", "events", "time-management", "productivity"],
+      "keywords": ["video", "ffmpeg", "whisper", "editing", "transcription", "analysis", "multimedia"],
       "category": "productivity",
       "strict": true,
       "commands": [
-        "./commands/setup.md"
+        "./commands/upgrade.md"
       ],
       "skills": [
-        "./skills/google-calendar"
+        "./skills/video-toolkit"
+      ],
+      "agents": [
+        "./agents/video-frame-analyzer.md"
       ]
     },
     {
-      "name": "google-gmail",
-      "source": "./plugins/google-gmail",
-      "description": "Full email management with Gmail API. Send, read, search, organize messages, manage drafts, labels, and attachments. Multi-account support with profile-based authentication",
+      "name": "claude-agent-sdk-dev",
+      "source": "./plugins/claude-agent-sdk-dev",
+      "description": "Development tools and documentation for building applications with the Claude Agent SDK. Covers Python and TypeScript APIs, core features, advanced features, and integrations.",
       "version": "0.1.0",
       "author": {
         "name": "Em"
       },
       "repository": "https://github.com/emdashcodes/claude-code-plugins",
       "license": "MIT",
-      "keywords": ["google-gmail", "email", "gmail", "messaging", "productivity", "multi-account", "labels", "attachments"],
-      "category": "productivity",
+      "keywords": ["claude", "agent-sdk", "sdk", "development", "api", "python", "typescript", "documentation"],
+      "category": "development-tools",
       "strict": true,
-      "commands": [
-        "./commands/setup.md"
-      ],
       "skills": [
-        "./skills/google-gmail"
+        "./skills/claude-agent-sdk"
       ]
     }
   ]

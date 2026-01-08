@@ -1,0 +1,138 @@
+---
+title: Session Management
+source_url: https://platform.claude.com/docs/en/agent-sdk/sessions
+---
+
+# Session Management
+
+The Claude Agent SDK provides session management capabilities for handling conversation state and resumption. Sessions allow you to continue conversations across multiple interactions while maintaining full context.
+
+## How Sessions Work
+
+When you start a new query, the SDK automatically creates a session and returns a session ID in the initial system message. You can capture this ID to resume the session later.
+
+### Getting the Session ID
+
+    import { query } from "@anthropic-ai/claude-agent-sdk"
+
+    let sessionId: string | undefined
+
+    const response = query({
+      prompt: "Help me build a web application",
+      options: {
+        model: "claude-sonnet-4-5"
+      }
+    })
+
+    for await (const message of response) {
+      // The first message is a system init message with the session ID
+      if (message.type === 'system' && message.subtype === 'init') {
+        sessionId = message.session_id
+        console.log(`Session started with ID: ${sessionId}`)
+        // You can save this ID for later resumption
+      }
+
+      // Process other messages...
+      console.log(message)
+    }
+
+    // Later, you can use the saved sessionId to resume
+    if (sessionId) {
+      const resumedResponse = query({
+        prompt: "Continue where we left off",
+        options: {
+          resume: sessionId
+        }
+      })
+    }
+
+## Resuming Sessions
+
+The SDK supports resuming sessions from previous conversation states, enabling continuous development workflows. Use the `resume` option with a session ID to continue a previous conversation.
+
+    import { query } from "@anthropic-ai/claude-agent-sdk"
+
+    // Resume a previous session using its ID
+    const response = query({
+      prompt: "Continue implementing the authentication system from where we left off",
+      options: {
+        resume: "session-xyz", // Session ID from previous conversation
+        model: "claude-sonnet-4-5",
+        allowedTools: ["Read", "Edit", "Write", "Glob", "Grep", "Bash"]
+      }
+    })
+
+    // The conversation continues with full context from the previous session
+    for await (const message of response) {
+      console.log(message)
+    }
+
+The SDK automatically handles loading the conversation history and context when you resume a session, allowing Claude to continue exactly where it left off.
+
+## Forking Sessions
+
+When resuming a session, you can choose to either continue the original session or fork it into a new branch. By default, resuming continues the original session. Use the `forkSession` option (TypeScript) or `fork_session` option (Python) to create a new session ID that starts from the resumed state.
+
+### When to Fork a Session
+
+Forking is useful when you want to:
+
+- Explore different approaches from the same starting point
+- Create multiple conversation branches without modifying the original
+- Test changes without affecting the original session history
+- Maintain separate conversation paths for different experiments
+
+### Forking vs Continuing
+
+| Behavior | `forkSession: false` (default) | `forkSession: true` |
+|----|----|----|
+| **Session ID** | Same as original | New session ID generated |
+| **History** | Appends to original session | Creates new branch from resume point |
+| **Original Session** | Modified | Preserved unchanged |
+| **Use Case** | Continue linear conversation | Branch to explore alternatives |
+
+### Example: Forking a Session
+
+    import { query } from "@anthropic-ai/claude-agent-sdk"
+
+    // First, capture the session ID
+    let sessionId: string | undefined
+
+    const response = query({
+      prompt: "Help me design a REST API",
+      options: { model: "claude-sonnet-4-5" }
+    })
+
+    for await (const message of response) {
+      if (message.type === 'system' && message.subtype === 'init') {
+        sessionId = message.session_id
+        console.log(`Original session: ${sessionId}`)
+      }
+    }
+
+    // Fork the session to try a different approach
+    const forkedResponse = query({
+      prompt: "Now let's redesign this as a GraphQL API instead",
+      options: {
+        resume: sessionId,
+        forkSession: true,  // Creates a new session ID
+        model: "claude-sonnet-4-5"
+      }
+    })
+
+    for await (const message of forkedResponse) {
+      if (message.type === 'system' && message.subtype === 'init') {
+        console.log(`Forked session: ${message.session_id}`)
+        // This will be a different session ID
+      }
+    }
+
+    // The original session remains unchanged and can still be resumed
+    const originalContinued = query({
+      prompt: "Add authentication to the REST API",
+      options: {
+        resume: sessionId,
+        forkSession: false,  // Continue original session (default)
+        model: "claude-sonnet-4-5"
+      }
+    })

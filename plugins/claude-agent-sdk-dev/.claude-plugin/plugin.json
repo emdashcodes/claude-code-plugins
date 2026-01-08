@@ -1,0 +1,9 @@
+{
+  "name": "claude-agent-sdk-dev",
+  "version": "0.1.0",
+  "description": "Development tools and documentation for building applications with the Claude Agent SDK",
+  "author": {
+    "name": "Em"
+  },
+  "license": "MIT"
+}
