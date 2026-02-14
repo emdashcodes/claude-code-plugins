@@ -1,0 +1,10 @@
+{
+  "name": "docs-to-skill",
+  "version": "1.0.0",
+  "description": "Ingest documentation sites and generate Claude Code skills",
+  "author": {
+    "name": "Em"
+  },
+  "license": "MIT",
+  "mcpServers": "./.mcp.json"
+}
