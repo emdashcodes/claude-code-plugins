@@ -156,7 +156,7 @@ new Promise((resolve) => {
 
 ### Step 2: Batch and Delegate
 
-Split the remaining URLs into batches of 5-10 pages per subagent. For each batch, spawn a `general-purpose` subagent using the Task tool:
+Split the remaining URLs into batches of 3-5 pages per subagent. Each page requires ~4-5 tool calls (navigate, load Turndown, extract, get title, write file), so keep batches small to avoid hitting turn limits. For each batch, spawn a `general-purpose` subagent using the Task tool:
 
 ```
 Task:
@@ -409,7 +409,7 @@ Some sites load content dynamically after initial page load. If Turndown returns
 ### Rate limiting
 
 If the site returns 429 errors:
-1. Reduce batch sizes to 3-5 pages per subagent
+1. Reduce batch sizes to 2-3 pages per subagent
 2. Add delays between navigations in subagent instructions
 
 ### Sites behind authentication
