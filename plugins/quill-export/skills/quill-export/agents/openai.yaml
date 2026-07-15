@@ -1,0 +1,4 @@
+interface:
+  display_name: "Quill Export"
+  short_description: "Export Quill meetings to Markdown"
+  default_prompt: "Use $quill-export to list my recent Quill meetings."
