@@ -1,6 +1,6 @@
 # emdashcodes/claude-code-plugins
 
-Claude Code plugins featuring specialized agents, commands, and development skills.
+Plugins featuring specialized agents, commands, and development skills for Claude Code, with Codex support where noted.
 
 ## claude-code-meta
 
@@ -103,6 +103,13 @@ Extract meeting recordings and transcripts from the Quill macOS app database wit
 ```bash
 # Install Quill export
 /plugin install quill-export@emdashcodes-claude-code-plugins
+```
+
+Codex can install the same plugin from this marketplace:
+
+```bash
+codex plugin marketplace add emdashcodes/claude-code-plugins
+codex plugin add quill-export@emdashcodes-claude-code-plugins
 ```
 
 ## nano-banana-image-editor

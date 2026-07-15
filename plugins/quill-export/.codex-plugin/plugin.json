@@ -1,0 +1,36 @@
+{
+  "name": "quill-export",
+  "version": "1.1.0",
+  "description": "Export local Quill meetings, transcripts, notes, and recording links to Markdown.",
+  "author": {
+    "name": "Em",
+    "url": "https://github.com/emdashcodes"
+  },
+  "homepage": "https://github.com/emdashcodes/claude-code-plugins/tree/trunk/plugins/quill-export",
+  "repository": "https://github.com/emdashcodes/claude-code-plugins",
+  "license": "MIT",
+  "keywords": [
+    "quill",
+    "meetings",
+    "transcripts",
+    "recordings",
+    "macos",
+    "markdown"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Quill Export",
+    "shortDescription": "Export Quill meetings to useful Markdown",
+    "longDescription": "List and export meetings from the local Quill macOS database with metadata, speaker-attributed transcripts, original notes, and recording links.",
+    "developerName": "Em",
+    "category": "Productivity",
+    "capabilities": [
+      "Read"
+    ],
+    "defaultPrompt": [
+      "List my recent Quill meetings.",
+      "Export a Quill meeting to Markdown.",
+      "Turn my latest Quill meeting into polished notes."
+    ]
+  }
+}

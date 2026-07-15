@@ -1,238 +1,101 @@
 ---
 name: quill-export
-description: Extract meeting recordings and transcripts from the Quill macOS app database. Outputs formatted markdown with speaker identification, transcripts, and metadata. Use when working with Quill meeting data.
+description: Export meetings, transcripts, speaker names, metadata, notes, and recording links from the Quill macOS app database to Markdown. Use when Codex or Claude needs to list, find, extract, summarize, or save local Quill meeting data.
 ---
 
 # Quill Meeting Export
 
-## Overview
+Export local Quill meetings through the bundled `scripts/export_meeting.py` script.
 
-Extract meeting data from Quill (macOS meeting recording app) and generate formatted markdown output with speaker-identified transcripts, meeting metadata, and Quill's AI-generated notes.
+## Resolve the bundled script
 
-This skill provides:
-1. Database extraction from Quill's SQLite database
-2. Speaker name mapping from contact records
-3. Transcript formatting with speaker identification
-4. Markdown generation with YAML frontmatter
-5. Meeting search by ID or fuzzy name matching
-
-## When to Use This Skill
-
-Activate when working with Quill meeting data:
-- Extracting meeting transcripts
-- Converting Quill recordings to markdown
-- Searching for meetings by name
-- Getting meeting metadata and participants
-
-## Workflow
-
-### Step 1: List Available Meetings
-
-Show recent meetings from Quill:
+Locate the directory containing this `SKILL.md`, then set `SCRIPT` to the absolute path of its bundled exporter:
 
 ```bash
-python3 ~/.claude/skills/quill-export/scripts/export_meeting.py list [limit]
+SCRIPT="<absolute-skill-directory>/scripts/export_meeting.py"
 ```
 
-**Output** (to stderr):
-- Meeting ID (UUID)
-- Title
-- Date and time
-- Duration
-- Meeting type
+Replace `<absolute-skill-directory>` before running the command. Use the skill path exposed by the current host. Do not assume the skill is under `~/.claude`, `~/.codex`, or the current working directory; plugin installations may run from a versioned cache.
 
-### Step 2: Export Meeting
+## Check access
 
-Export meeting by ID or search term:
+Quill stores its database at:
+
+```text
+~/Library/Application Support/Quill/quill.db
+```
+
+Before the first export, verify that the database is readable:
 
 ```bash
-# By exact ID
-python3 ~/.claude/skills/quill-export/scripts/export_meeting.py export 76490ffc-d751-4a2a-9ef5-df4d3ddce442
-
-# By fuzzy search term
-python3 ~/.claude/skills/quill-export/scripts/export_meeting.py export "orchestrator"
+test -r "$HOME/Library/Application Support/Quill/quill.db"
 ```
 
-**Output** (to stdout):
-- Complete markdown document
-- YAML frontmatter with metadata
-- Transcript with real speaker names (if tagged in Quill)
-- Original Quill-generated notes
-- Audio file links
+If it is missing, confirm that Quill is installed and has created at least one meeting. If macOS or the execution sandbox denies access, explain the exact path that must be allowed. Do not copy the database or change its permissions without the user's approval.
 
-**Fuzzy Search Behavior:**
-- Case-insensitive partial matching
-- If single match: Exports automatically
-- If multiple matches: Lists options (stderr) and exits
-- If no matches: Error message and exit
+Treat transcripts and meeting notes as private local data. Only expose or save the meeting content the user requested.
 
-### Step 3: Use the Markdown Output
+## List meetings
 
-The markdown is printed to stdout, allowing flexible usage:
+List recent meetings before exporting when the user has not supplied an exact meeting ID:
 
 ```bash
-# Save to file
-python3 export_meeting.py export "meeting name" > output.md
-
-# Pipe to other tools
-python3 export_meeting.py export <id> | pbcopy
-
-# Capture in a variable (from another script/tool)
-markdown=$(python3 export_meeting.py export <id>)
+python3 "$SCRIPT" list 20
 ```
 
-## Database Schema
+The list is written to stderr and includes the meeting ID, title, date, duration, and type. Use a smaller or larger positive integer when the user specifies a limit.
 
-The script queries Quill's SQLite database at `~/Library/Application Support/Quill/quill.db`.
+## Export a meeting
 
-See `references/quill-schema.md` for complete schema documentation including:
-- Meeting table structure
-- Transcript JSON format
-- ContactMeeting speaker mapping
-- Meeting type classifications
+Export by exact meeting ID:
 
-## Speaker Name Mapping
-
-The script automatically maps anonymous speaker IDs to real names:
-
-**How it works:**
-1. Queries `ContactMeeting` table for speaker IDs
-2. Looks up contact names in `Contact` table
-3. Replaces speaker IDs (e.g., `SPK-abc123`) with real names in transcript
-
-**When names are available:**
-```markdown
-**James LePage:** Hello, how are you?
-**Ember:** I'm doing well, thanks!
-```
-
-**When names are not available:**
-```markdown
-**SPK-mvjxhzyf43:** Hello, how are you?
-**SPK-h6xiau6chjv:** I'm doing well, thanks!
-```
-
-## Meeting Type Classification
-
-Meetings are categorized as `work` or `personal` based on type:
-
-**Work types:**
-- `1on1`, `internal_product`, `internal_sync`, `internal_standup`
-- `existing_vendor:customer`, `other`
-
-**Personal types:**
-- `personal`, `self_note`, `medical:patient`
-
-Category appears in YAML frontmatter `type` field.
-
-## Markdown Output Format
-
-```markdown
----
-meeting_id: {UUID}
-type: work|personal
-date: YYYY-MM-DD
-start_time: HH:MM
-duration: X minutes
-participants: ["Name 1", "Name 2"]
-tags: ["meeting", "type", ...]
----
-
-# {Meeting Title}
-
-## Summary
-
-_AI summary will be generated here_
-
-## Key Discussion Points
-
-_Key points will be extracted here_
-
-## Action Items
-
-_Action items will be extracted here_
-
-## Related
-
-_Links to related tasks and projects_
-
-## Original Quill Notes
-
-{Quill's AI-generated meeting notes}
-
-## Transcript
-
-**Speaker:** Transcript text...
-
-## Audio
-
-[Recording](file:///path/to/audio.m4a)
-```
-
-## Audio File Handling
-
-Audio files remain in Quill's directory:
-- Location: `~/Library/Application Support/Quill/meetings/`
-- Linked using `file://` absolute URLs
-- Only the combined audio file is linked (`*-combined.m4a`)
-
-## Error Handling
-
-**Meeting not found:**
-- Prints error to stderr
-- Exit code 1
-
-**Multiple search matches:**
-- Lists all matching meetings to stderr
-- Prompts user to be more specific
-- Exit code 1
-
-**Database errors:**
-- Connection failures reported to stderr
-- Exit code 1
-
-## Usage Examples
-
-**List recent meetings:**
 ```bash
-python3 export_meeting.py list 10
+python3 "$SCRIPT" export "76490ffc-d751-4a2a-9ef5-df4d3ddce442"
 ```
 
-**Export by ID:**
+Or export by a case-insensitive title fragment:
+
 ```bash
-python3 export_meeting.py export 76490ffc-d751-4a2a-9ef5-df4d3ddce442 > meeting.md
+python3 "$SCRIPT" export "orchestrator"
 ```
 
-**Export by name search:**
+If a title fragment matches multiple meetings, show the short match list and ask the user which meeting they mean. Do not guess based only on recency.
+
+The Markdown document is written to stdout. Status and errors are written to stderr, so redirection is safe:
+
 ```bash
-python3 export_meeting.py export "AI Discussion" > meeting.md
+python3 "$SCRIPT" export "meeting title" > "/absolute/output/path/meeting.md"
 ```
 
-**Integration with other tools:**
-```bash
-# Copy to clipboard
-python3 export_meeting.py export "sync meeting" | pbcopy
+Quote all paths and search terms. When saving a file, use the destination the user supplied. If no destination was supplied, return the Markdown in the conversation or ask before writing outside the current workspace.
 
-# Save with custom filename
-python3 export_meeting.py export <id> > ~/Notes/$(date +%Y-%m-%d)-meeting.md
-```
+## Finish the note
 
-## Resources
+The exporter preserves Quill's original notes and emits placeholders for `Summary`, `Key Discussion Points`, `Action Items`, and `Related`.
 
-### scripts/export_meeting.py
-Python script for extracting meeting data and generating markdown.
+- For a raw export, leave the transcript and original Quill notes unchanged and remove unfilled placeholder sections.
+- For a polished meeting note, replace the placeholders using only evidence in the transcript, metadata, and Quill notes.
+- Keep decisions distinct from discussion points.
+- Include an action item only when the meeting assigns or clearly implies an action. Preserve the named owner when available.
+- Add related links only when the user provides them or they can be verified in the current workspace. Do not invent cross-references.
+- Preserve the YAML frontmatter, speaker attribution, original Quill notes, and recording link.
 
-**Functions:**
-- `connect_db()` - Connect to Quill database
-- `get_speaker_names(conn, meeting_id)` - Map speaker IDs to names
-- `list_recent_meetings(conn, limit)` - List meetings
-- `search_meetings(conn, search_term)` - Fuzzy search by title
-- `get_meeting(conn, meeting_id)` - Fetch meeting data
-- `format_transcript(transcript, speaker_names)` - Format with names
-- `format_meeting_markdown(meeting)` - Generate markdown output
+## Output details
 
-### references/quill-schema.md
-Complete Quill database schema documentation.
+The exporter:
 
-### assets/meeting-template.md
-Template showing markdown structure and formatting.
+- Maps Quill speaker IDs to contact names when Quill has tagged them.
+- Groups consecutive transcript blocks from the same speaker.
+- Classifies known meeting types as `work` or `personal` in YAML frontmatter.
+- Includes only the combined `.m4a` recording when it can find one.
+- Never modifies the Quill database.
+
+See [references/quill-schema.md](references/quill-schema.md) only when debugging schema drift or changing the exporter. Use [assets/meeting-template.md](assets/meeting-template.md) as the target structure for a polished note.
+
+## Handle failures
+
+- Database missing or unreadable: report the expected path and the underlying error.
+- No title match: show the search term and suggest listing recent meetings.
+- Multiple title matches: show the matching IDs and titles, then wait for a choice.
+- Missing transcript or audio: export the available metadata and notes; do not treat optional media as a total failure.
+- SQLite schema error: inspect the live schema and compare it with `references/quill-schema.md` before changing any query.
