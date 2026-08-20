@@ -10,7 +10,7 @@ and composition blending.
 """
 
 import argparse
-from gemini_image import generate_image
+import sys
 
 
 def main():
@@ -59,18 +59,53 @@ Examples:
         action="store_true",
         help="Enable Google Search grounding for real-time information (weather, sports, facts)"
     )
+    parser.add_argument(
+        "--provider",
+        choices=["gemini", "atlas"],
+        default="gemini",
+        help="Image API provider (default: gemini)"
+    )
+    parser.add_argument(
+        "--thinking-level",
+        choices=["default", "high", "minimal"],
+        default="default",
+        help="Atlas reasoning level (default: default)"
+    )
 
     args = parser.parse_args()
 
-    generate_image(
-        prompt=args.prompt,
-        output_path=args.output,
-        input_image_path=None,
-        reference_images=args.references,
-        resolution=args.resolution,
-        aspect_ratio=args.aspect_ratio,
-        enable_search=args.search
-    )
+    if args.provider == "atlas":
+        if args.references:
+            parser.error("--provider atlas currently supports text-to-image only; remove --reference")
+        if args.search:
+            parser.error("--search is only supported by the Gemini provider")
+        if args.resolution != "1K":
+            parser.error("--provider atlas currently supports --resolution 1K only")
+
+        from atlas_image import AtlasAPIError, generate_image
+
+        try:
+            generate_image(
+                prompt=args.prompt,
+                output_path=args.output,
+                aspect_ratio=args.aspect_ratio,
+                thinking_level=args.thinking_level,
+            )
+        except AtlasAPIError as exc:
+            print(f"Error: {exc}", file=sys.stderr)
+            sys.exit(1)
+    else:
+        from gemini_image import generate_image
+
+        generate_image(
+            prompt=args.prompt,
+            output_path=args.output,
+            input_image_path=None,
+            reference_images=args.references,
+            resolution=args.resolution,
+            aspect_ratio=args.aspect_ratio,
+            enable_search=args.search
+        )
 
 
 if __name__ == "__main__":
