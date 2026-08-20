@@ -5,7 +5,7 @@ description: Edit and manipulate images using natural language prompts. Use this
 
 # Image Editor
 
-This skill enables AI-powered image editing and creation using **Google's Gemini 3 Pro Image** model (nicknamed "Nano Banana Pro"). It allows editing existing images or creating new images from scratch through natural language instructions.
+This skill enables AI-powered image editing and creation using **Google's Gemini 3 Pro Image** model (nicknamed "Nano Banana Pro"). It also offers Atlas Cloud as an optional provider for text-to-image creation. Gemini remains the default and is required for editing, reference images, and Google Search grounding.
 
 ## When to Use This Skill
 
@@ -50,6 +50,16 @@ This creates a Python virtual environment and installs the required packages (go
 
 All script examples below use `${NANO_BANANA_VENV:-${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/.venv}/bin/python3` to ensure the venv's Python interpreter is used.
 
+**Optional Atlas Cloud setup:**
+
+For text-to-image creation through Atlas Cloud, export an API key instead of saving it in the plugin directory:
+
+```bash
+export ATLASCLOUD_API_KEY="your-key-here"
+```
+
+`ATLASCLOUD_BASE_URL` may be set for a compatible deployment; otherwise the client uses `https://api.atlascloud.ai`. The Atlas path uses `google/nano-banana-2-lite/text-to-image-developer`, submits one generation request, and polls only the returned prediction until it reaches a terminal state.
+
 ## How to Use
 
 ### Creating New Images from Scratch
@@ -68,6 +78,16 @@ ${NANO_BANANA_VENV:-${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/.venv}
   cat-icon.png "A playful orange tabby cat icon, simple and clean design" \
   --resolution 1K --aspect-ratio 1:1
 ```
+
+**Example: Create through Atlas Cloud**
+
+```bash
+${NANO_BANANA_VENV:-${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/.venv}/bin/python3 ${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/scripts/create_image.py \
+  cat-icon.png "A playful orange tabby cat icon, simple and clean design" \
+  --provider atlas --resolution 1K --aspect-ratio 1:1
+```
+
+The Atlas provider currently supports text-to-image at `1K` only. It does not accept `--reference` or `--search`; use the default Gemini provider for those capabilities. Use `--thinking-level default`, `high`, or `minimal` to control the supported Atlas reasoning level.
 
 **Example: Create a high-resolution illustration**
 
@@ -240,11 +260,12 @@ ${NANO_BANANA_VENV:-${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/.venv}
 ## Workflow
 
 1. **Identify the task** - Determine if the user wants to create a new image or edit an existing one
-2. **Check for dependencies and API key** - If errors occur, verify the API key is configured in the config file and that dependencies are installed
+2. **Check for dependencies and API key** - For Gemini, verify the key is configured in the plugin config. For Atlas, verify `ATLASCLOUD_API_KEY` is set. Also confirm dependencies are installed.
 3. **Prepare the prompt** - Translate the user's request into a clear, specific natural language instruction
 4. **Run the appropriate script**:
    - Use `create_image.py` for generating new images
    - Use `edit_image.py` for modifying existing images
+   - Add `--provider atlas` only for text-to-image creation when the user selects Atlas Cloud
 5. **Review the output** - Check if the result meets expectations; iterate if needed
 
 ## Tips for Effective Prompts
@@ -306,6 +327,11 @@ ${NANO_BANANA_VENV:-${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/.venv}
 **"No Gemini API key configured" error:**
 
 - Run the setup script: `${NANO_BANANA_VENV:-${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/.venv}/bin/python3 ${CLAUDE_PLUGIN_ROOT}/skills/nano-banana-image-editor/scripts/setup-gemini-token.py YOUR_API_KEY`
+
+**"ATLASCLOUD_API_KEY is not set" error:**
+
+- Export `ATLASCLOUD_API_KEY` in the current shell before running `create_image.py --provider atlas`
+- Do not pass the key as a command-line argument or save it in the repository
 
 **"No image in response" message:**
 
